@@ -163,13 +163,15 @@ export function GroupScreen({ group, email, onBack, onSignOut, onDeleted }: Prop
       if (insertError) {
         throw insertError
       }
+      const expenseId = (data as { id: string }).id
       const { error: splitError } = await client.from('expense_participants').insert(
         splitIds.map((memberId) => ({
-          expense_id: (data as { id: string }).id,
+          expense_id: expenseId,
           member_id: memberId,
         })),
       )
       if (splitError) {
+        await client.from('expenses').delete().eq('id', expenseId)
         throw splitError
       }
       setDescription('')
