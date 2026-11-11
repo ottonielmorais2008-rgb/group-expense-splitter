@@ -4,7 +4,7 @@
 
 A small web app for splitting group expenses. Create a group, add people by name, record who paid, and see balances plus a short list of who should pay whom.
 
-**Live demo:** _pending deploy_
+**Live demo:** [https://group-expense-splitter-one.vercel.app](https://group-expense-splitter-one.vercel.app)
 
 ## What it does
 
@@ -65,7 +65,9 @@ The dev server listens on `http://127.0.0.1:5173/`. Use that address only when r
 
 ## What went wrong
 
-_To be filled after implementation._
+- Hosted Supabase projects confirm emails by default, and this project has no custom SMTP. There was no API tool available to turn confirmation off, so a database trigger auto-confirms new users. Sign-up then returns a session immediately. Email addresses are not verified; that is documented above.
+- New Vercel projects had Authentication enabled on the `vercel.app` domain. That would have blocked a public demo, so it was turned off. The production site now responds with HTTP 200 without a Vercel login.
+- The first remainder-cents unit test expected the wrong shares for a 5-cent split among four people. The implementation was already summing to the original amount; only the expected values in the test were wrong.
 
 ## License
 
